@@ -1,7 +1,7 @@
 package com.example.Neobis_week_3.Service;
 
 import com.example.Neobis_week_3.Dto.UsersDto;
-import com.example.Neobis_week_3.Models.Users;
+import com.example.Neobis_week_3.Entity.Users;
 import com.example.Neobis_week_3.Repository.UsersRepository;
 import com.example.Neobis_week_3.Utils.UserMappingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,11 @@ public class UsersService {
         this.userMappingUtils = userMappingUtils;
     }
 
-    public List<Users> getAllUsers() {
+    public List<Users> getAll() {
         return usersRepository.findAll();
+    }
+    public List<UsersDto> getAllUsersDto(){
+        return getAll().stream().map(userMappingUtils::mapToUsersDto).collect(Collectors.toList());
     }
 
     public Optional<Users> getUserById(Long user_id) {
@@ -34,6 +37,10 @@ public class UsersService {
             throw new IllegalStateException("There is no Users with Id " + user_id);
         }
         return usersRepository.findById(user_id);
+    }
+
+    public UsersDto getUserDtoById(Long id){
+        return userMappingUtils.mapToUsersDto(getUserById(id).orElse(new Users()));
     }
 
     public void addNewUser(Users user) {
@@ -91,11 +98,4 @@ public class UsersService {
         user.setStatus(false);
     }
 
-    public List<UsersDto> getAll(){
-        return usersRepository.findAll().stream().map(userMappingUtils::mapToUsersDto).collect(Collectors.toList());
-    }
-
-    public UsersDto getById(Long id){
-        return userMappingUtils.mapToUsersDto(usersRepository.findById(id).orElse(new Users()));
-    }
 }

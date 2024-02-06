@@ -1,4 +1,4 @@
-package com.example.Neobis_week_3.Models;
+package com.example.Neobis_week_3.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

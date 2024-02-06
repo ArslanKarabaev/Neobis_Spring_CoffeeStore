@@ -1,6 +1,6 @@
 package com.example.Neobis_week_3.Config;
 
-import com.example.Neobis_week_3.Models.Coffee;
+import com.example.Neobis_week_3.Entity.Coffee;
 import com.example.Neobis_week_3.Repository.CoffeeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

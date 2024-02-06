@@ -1,6 +1,6 @@
 package com.example.Neobis_week_3.Service;
 
-import com.example.Neobis_week_3.Models.Coffee;
+import com.example.Neobis_week_3.Entity.Coffee;
 import com.example.Neobis_week_3.Repository.CoffeeRepository;
 import com.example.Neobis_week_3.Utils.CoffeeMappingUtils;
 import org.springframework.beans.factory.annotation.Autowired;

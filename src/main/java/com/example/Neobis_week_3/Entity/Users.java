@@ -1,18 +1,25 @@
-package com.example.Neobis_week_3.Models;
+package com.example.Neobis_week_3.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table
-public class Users {
+public class Users implements UserDetails {
     @Id
     @SequenceGenerator(name = "Users_sequence",
             sequenceName = "Users_sequence",
@@ -30,6 +37,9 @@ public class Users {
     @Transient
     private Integer age;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public Users(String firstName, String secondName, LocalDate dateOfBirth, String email, String mobNum, String password) {
         this.firstName = firstName;
         this.secondName = secondName;
@@ -37,5 +47,37 @@ public class Users {
         this.email = email;
         this.mobNum = mobNum;
         this.password = password;
+    }
+
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

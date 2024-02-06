@@ -1,14 +1,14 @@
 package com.example.Neobis_week_3.Controller;
 
-import com.example.Neobis_week_3.Models.Users;
+import com.example.Neobis_week_3.Dto.UsersDto;
+import com.example.Neobis_week_3.Entity.Users;
 import com.example.Neobis_week_3.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping (path = "api/v1/CoffeeStore/Users")
@@ -26,13 +26,14 @@ public class UsersController {
     }
 
     @GetMapping
-    public List<Users> getAllUsers(){
-         return userService.getAllUsers();
+    public List<UsersDto> getAllUsers() {
+        return userService.getAllUsersDto();
     }
 
     @GetMapping(path = "{user_id}")
-    public Optional<Users> getUserById(@PathVariable("user_id") Long user_id){
-        return userService.getUserById(user_id);
+    public UsersDto getUserById(@PathVariable("user_id") Long user_id){
+        return userService.getUserDtoById(user_id);
+
     }
 
     @PostMapping
