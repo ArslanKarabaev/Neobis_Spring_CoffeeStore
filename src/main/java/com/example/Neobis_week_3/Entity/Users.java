@@ -40,13 +40,14 @@ public class Users implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Users(String firstName, String secondName, LocalDate dateOfBirth, String email, String mobNum, String password) {
+    public Users(String firstName, String secondName, LocalDate dateOfBirth, String email, String mobNum, String password, Role role) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.mobNum = mobNum;
         this.password = password;
+        this.role = role;
     }
 
 

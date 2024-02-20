@@ -20,15 +20,13 @@ public class UsersController {
         this.userService = usersService;
     }
 
-    @GetMapping("/registration")
-    public String home(){
-        return "Registration";
-    }
-
     @GetMapping
-    public List<UsersDto> getAllUsers() {
-        return userService.getAllUsersDto();
+    public ResponseEntity<UsersDto> getAllUsers(){
+        return ResponseEntity.ok((UsersDto) userService.getAllUsersDto());
     }
+    //    public List<UsersDto> getAllUsers(){
+//         return userService.getAllUsersDto();
+
 
     @GetMapping(path = "{user_id}")
     public UsersDto getUserById(@PathVariable("user_id") Long user_id){

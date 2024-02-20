@@ -1,9 +1,11 @@
 package com.example.Neobis_week_3.Config.SecurityConfig;
 
+import com.example.Neobis_week_3.Entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,25 +21,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter filter) throws Exception {
-   //     http.csrf(AbstractHttpConfigurer::disable)
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("api/v1/CoffeeStore/**").hasAuthority(String.valueOf(Role.USER))
+                        .anyRequest().hasAuthority(String.valueOf(Role.ADMIN))
+
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        //        .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAutoFilter, UsernamePasswordAuthenticationFilter.class);
 
-
-//        AntPathRequestMatcher[] requestMatchers = getAntPathRequestMatchers();
-//        http.authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers(requestMatchers).permitAll()
-//                        .anyRequest().authenticated())
-//                .addFilterBefore(filter, JwtAuthenticationFilter.class).csrf(AbstractHttpConfigurer::disable)
-//                .httpBasic(withDefaults());
 
         return http.build();
     }
