@@ -1,5 +1,6 @@
 package com.example.Neobis_week_3.Controller.Auth;
 
+import com.example.Neobis_week_3.Enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,5 @@ public class RegisterRequest {
     private String email;
     private String mobNum;
     private String password;
+    private Role role;
 }

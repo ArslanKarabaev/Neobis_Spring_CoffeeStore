@@ -1,6 +1,5 @@
 package com.example.Neobis_week_3.Controller.Auth;
 
-import com.example.Neobis_week_3.Entity.Role;
 import com.example.Neobis_week_3.Entity.Users;
 import com.example.Neobis_week_3.Repository.UsersRepository;
 import com.example.Neobis_week_3.Service.JwtService.JwtService;
@@ -29,7 +28,7 @@ public class AuthenticationService {
                 .mobNum(request.getMobNum())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .status(true)
-                .role(Role.USER)
+                .role(request.getRole())
                 .build();
         repository.save(user);
 

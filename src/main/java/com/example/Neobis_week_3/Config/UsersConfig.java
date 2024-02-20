@@ -1,39 +1,44 @@
 package com.example.Neobis_week_3.Config;
 
-import com.example.Neobis_week_3.Entity.Role;
-import com.example.Neobis_week_3.Entity.Users;
-import com.example.Neobis_week_3.Repository.UsersRepository;
+import com.example.Neobis_week_3.Controller.Auth.AuthenticationService;
+import com.example.Neobis_week_3.Controller.Auth.RegisterRequest;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalDate;
-import java.util.List;
+import static com.example.Neobis_week_3.Enums.Role.ADMIN;
+import static com.example.Neobis_week_3.Enums.Role.MANAGER;
 
 @Configuration
 public class UsersConfig {
-    @Bean
-    CommandLineRunner UserscommandLineRunner(UsersRepository repository) {
-        return args -> {
-            Users Arslan = new Users(
-                    "Arslan",
-                    "Karabaev",
-                    LocalDate.of(2003, 8, 2),
-                    "karabaevarslan8@gmail.com",
-                    "0552020803",
-                    "123",
-                    Role.ADMIN
-            );
 
-            Users Aktilek = new Users(
-                    "Aktilek",
-                    "Kamilov",
-                    LocalDate.of(2003, 9, 13),
-                    "kamilovaktilek@gmail.com",
-                    "0123456789",
-                    "456",
-                    Role.USER);
-            repository.saveAll(List.of(Arslan, Aktilek));
+    public static void main(String[] args) {
+        SpringApplication.run(UsersConfig.class, args);
+    }
+    @Bean
+    public CommandLineRunner commandLineRunner(
+            AuthenticationService service
+    ) {
+        return args -> {
+            var admin = RegisterRequest.builder()
+                    .firstName("Admin")
+                    .secondName("Admin")
+                    .email("admin@mail.com")
+                    .password("password")
+                    .role(ADMIN)
+                    .build();
+            System.out.println("Admin token: " + service.register(admin).getToken());
+
+            var manager = RegisterRequest.builder()
+                    .firstName("Admin")
+                    .secondName("Admin")
+                    .email("manager@mail.com")
+                    .password("pass")
+                    .role(MANAGER)
+                    .build();
+            System.out.println("Manager token: " + service.register(manager).getToken());
+
         };
     }
 }
