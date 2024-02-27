@@ -1,4 +1,4 @@
-package com.example.Neobis_week_3.Service;
+package com.example.Neobis_week_3.Service.UsersService;
 
 import com.example.Neobis_week_3.Entity.Users;
 import com.example.Neobis_week_3.Repository.UsersRepository;

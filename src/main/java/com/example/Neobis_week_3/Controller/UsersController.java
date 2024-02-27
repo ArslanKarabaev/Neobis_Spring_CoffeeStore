@@ -1,7 +1,7 @@
 package com.example.Neobis_week_3.Controller;
 
-import com.example.Neobis_week_3.Service.ChangePasswordRequest;
-import com.example.Neobis_week_3.Service.UsersService;
+import com.example.Neobis_week_3.Service.UsersService.ChangePasswordRequest;
+import com.example.Neobis_week_3.Service.UsersService.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

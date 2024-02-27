@@ -63,8 +63,7 @@ public class AdminService {
                            String secondName,
                            LocalDate dateOfBirth,
                            String email,
-                           String mobnum,
-                           String password) {
+                           String mobnum) {
         Users users = usersRepository.findById(userId).orElseThrow(() -> new IllegalStateException(
                 "User with id " + userId + "  does not exists"));
 
@@ -92,9 +91,6 @@ public class AdminService {
             users.setMobNum(mobnum);
         }
 
-        if (password != null && password.length() > 0 && !Objects.equals(users.getPassword(), password)) {
-            users.setPassword(password);
-        }
     }
 
     @Transactional

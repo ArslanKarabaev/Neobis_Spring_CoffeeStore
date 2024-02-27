@@ -46,9 +46,8 @@ public class AdminController {
             @RequestParam(required = false) String secondName,
             @RequestParam(required = false) LocalDate dateOfBirth,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) String mobnum,
-            @RequestParam(required = false) String password){
-        adminService.updateUser(userId,firstName,secondName,dateOfBirth,email,mobnum,password);
+            @RequestParam(required = false) String mobnum){
+        adminService.updateUser(userId,firstName,secondName,dateOfBirth,email,mobnum);
     }
 
     @PutMapping(path = "delete/{userId}")

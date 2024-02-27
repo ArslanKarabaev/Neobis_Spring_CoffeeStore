@@ -1,4 +1,4 @@
-package com.example.Neobis_week_3.Service;
+package com.example.Neobis_week_3.Service.UsersService;
 
 
 import lombok.Builder;
