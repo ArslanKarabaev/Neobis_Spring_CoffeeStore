@@ -1,7 +1,9 @@
 package com.example.Neobis_week_3.Service;
 
 import com.example.Neobis_week_3.Dto.UsersDto;
+import com.example.Neobis_week_3.Entity.Coffee;
 import com.example.Neobis_week_3.Entity.Users;
+import com.example.Neobis_week_3.Repository.CoffeeRepository;
 import com.example.Neobis_week_3.Repository.UsersRepository;
 import com.example.Neobis_week_3.Utils.UserMappingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class AdminService {
     public final UsersRepository usersRepository;
+    private final CoffeeRepository coffeeRepository;
     private final UserMappingUtils userMappingUtils;
 
     @Autowired
-    public AdminService(UsersRepository usersRepository, UserMappingUtils userMappingUtils) {
+    public AdminService(UsersRepository usersRepository, CoffeeRepository coffeeRepository, UserMappingUtils userMappingUtils) {
         this.usersRepository = usersRepository;
+        this.coffeeRepository = coffeeRepository;
         this.userMappingUtils = userMappingUtils;
     }
 
@@ -99,5 +103,22 @@ public class AdminService {
                 "User with id " + userId + "  does not exists"));
         user.setStatus(false);
     }
+
+    public void addNewCoffee(Coffee coffee) {
+        Optional<Coffee> coffeeByName = coffeeRepository.findCoffeeByName(coffee.getName());
+        if (coffeeByName.isPresent()) {
+            throw new IllegalStateException("This coffee already added");
+        }
+        coffeeRepository.save(coffee);
+    }
+
+    public void deleteCoffee(Long coffee_id) {
+        boolean exists = coffeeRepository.existsById(coffee_id);
+        if (!exists) {
+            throw new IllegalStateException("Coffee with id " + coffee_id + " does not exists");
+        }
+        coffeeRepository.deleteById(coffee_id);
+    }
+
 
 }

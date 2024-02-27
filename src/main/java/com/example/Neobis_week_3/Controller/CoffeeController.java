@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/CoffeeStore/Coffee")
+@RequestMapping(path = "api/v1/CoffeeStore/Coffee/")
 public class CoffeeController {
     private final CoffeeService coffeeService;
 
@@ -17,7 +17,7 @@ public class CoffeeController {
         this.coffeeService = coffeeService;
     }
 
-    @GetMapping
+    @GetMapping(path = "getAllCoffee")
     public List<Coffee> getAllCoffee() {
         return coffeeService.getAllCoffee();
     }
@@ -27,13 +27,4 @@ public class CoffeeController {
         return coffeeService.getCoffeeById(coffee_id);
     }
 
-    @PostMapping
-    public void addNewCoffee(@RequestBody Coffee coffee) {
-        coffeeService.addNewCoffee(coffee);
-    }
-
-    @DeleteMapping(path = "{coffee_id}")
-    public void deleteCoffee(@PathVariable("coffee_id") Long coffee_id) {
-        coffeeService.deleteCoffee(coffee_id);
-    }
 }

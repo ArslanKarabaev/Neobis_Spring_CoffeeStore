@@ -24,7 +24,7 @@ public class UsersConfig {
             var admin = RegisterRequest.builder()
                     .firstName("Admin")
                     .secondName("Admin")
-                    .email("admin@mail.com")
+                    .email("admin@gmail.com")
                     .password("password")
                     .role(ADMIN)
                     .build();
@@ -33,7 +33,7 @@ public class UsersConfig {
             var manager = RegisterRequest.builder()
                     .firstName("Admin")
                     .secondName("Admin")
-                    .email("manager@mail.com")
+                    .email("manager@gmail.com")
                     .password("pass")
                     .role(MANAGER)
                     .build();

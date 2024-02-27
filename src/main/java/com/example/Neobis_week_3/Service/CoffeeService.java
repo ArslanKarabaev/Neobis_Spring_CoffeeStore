@@ -13,12 +13,10 @@ import java.util.Optional;
 public class CoffeeService {
 
     private final CoffeeRepository coffeeRepository;
-    private final CoffeeMappingUtils coffeeMappingUtils;
 
     @Autowired
-    public CoffeeService(CoffeeRepository coffeeRepository, CoffeeMappingUtils coffeeMappingUtils) {
+    public CoffeeService(CoffeeRepository coffeeRepository) {
         this.coffeeRepository = coffeeRepository;
-        this.coffeeMappingUtils = coffeeMappingUtils;
     }
 
     public List<Coffee> getAllCoffee() {
@@ -31,22 +29,6 @@ public class CoffeeService {
             throw new IllegalStateException("There is no coffee with id " + coffee_id);
         }
         return coffeeRepository.findById(coffee_id);
-    }
-
-    public void addNewCoffee(Coffee coffee) {
-        Optional<Coffee> coffeeByName = coffeeRepository.findCoffeeByName(coffee.getName());
-        if (coffeeByName.isPresent()) {
-            throw new IllegalStateException("This coffee already added");
-        }
-        coffeeRepository.save(coffee);
-    }
-
-    public void deleteCoffee(Long coffee_id) {
-        boolean exists = coffeeRepository.existsById(coffee_id);
-        if (!exists) {
-            throw new IllegalStateException("Coffee with id " + coffee_id + " does not exists");
-        }
-        coffeeRepository.deleteById(coffee_id);
     }
 
 
