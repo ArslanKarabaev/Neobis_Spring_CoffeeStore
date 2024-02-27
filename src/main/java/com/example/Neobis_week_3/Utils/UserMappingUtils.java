@@ -1,7 +1,7 @@
 package com.example.Neobis_week_3.Utils;
 
 import com.example.Neobis_week_3.Dto.UsersDto;
-import com.example.Neobis_week_3.Models.Users;
+import com.example.Neobis_week_3.Entity.Users;
 import org.springframework.stereotype.Service;
 
 @Service

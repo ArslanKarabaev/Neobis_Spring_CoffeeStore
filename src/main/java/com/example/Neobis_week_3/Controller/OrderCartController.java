@@ -1,6 +1,6 @@
 package com.example.Neobis_week_3.Controller;
 
-import com.example.Neobis_week_3.Models.OrderCart;
+import com.example.Neobis_week_3.Entity.OrderCart;
 import com.example.Neobis_week_3.Service.OrderCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

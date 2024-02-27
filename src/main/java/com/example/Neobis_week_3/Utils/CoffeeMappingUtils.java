@@ -1,7 +1,7 @@
 package com.example.Neobis_week_3.Utils;
 
 import com.example.Neobis_week_3.Dto.CoffeeDto;
-import com.example.Neobis_week_3.Models.Coffee;
+import com.example.Neobis_week_3.Entity.Coffee;
 import org.springframework.stereotype.Service;
 
 @Service

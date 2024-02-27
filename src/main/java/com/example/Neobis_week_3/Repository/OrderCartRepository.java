@@ -1,6 +1,6 @@
 package com.example.Neobis_week_3.Repository;
 
-import com.example.Neobis_week_3.Models.OrderCart;
+import com.example.Neobis_week_3.Entity.OrderCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

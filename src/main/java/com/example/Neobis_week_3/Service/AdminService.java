@@ -1,7 +1,9 @@
 package com.example.Neobis_week_3.Service;
 
 import com.example.Neobis_week_3.Dto.UsersDto;
-import com.example.Neobis_week_3.Models.Users;
+import com.example.Neobis_week_3.Entity.Coffee;
+import com.example.Neobis_week_3.Entity.Users;
+import com.example.Neobis_week_3.Repository.CoffeeRepository;
 import com.example.Neobis_week_3.Repository.UsersRepository;
 import com.example.Neobis_week_3.Utils.UserMappingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +17,24 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UsersService {
+public class AdminService {
     public final UsersRepository usersRepository;
+    private final CoffeeRepository coffeeRepository;
     private final UserMappingUtils userMappingUtils;
+
     @Autowired
-    public UsersService(UsersRepository usersRepository, UserMappingUtils userMappingUtils) {
+    public AdminService(UsersRepository usersRepository, CoffeeRepository coffeeRepository, UserMappingUtils userMappingUtils) {
         this.usersRepository = usersRepository;
+        this.coffeeRepository = coffeeRepository;
         this.userMappingUtils = userMappingUtils;
     }
 
-    public List<Users> getAllUsers() {
+    public List<Users> getAll() {
         return usersRepository.findAll();
+    }
+
+    public List<UsersDto> getAllUsersDto() {
+        return getAll().stream().map(userMappingUtils::mapToUsersDto).collect(Collectors.toList());
     }
 
     public Optional<Users> getUserById(Long user_id) {
@@ -34,6 +43,10 @@ public class UsersService {
             throw new IllegalStateException("There is no Users with Id " + user_id);
         }
         return usersRepository.findById(user_id);
+    }
+
+    public UsersDto getUserDtoById(Long id) {
+        return userMappingUtils.mapToUsersDto(getUserById(id).orElse(new Users()));
     }
 
     public void addNewUser(Users user) {
@@ -50,8 +63,7 @@ public class UsersService {
                            String secondName,
                            LocalDate dateOfBirth,
                            String email,
-                           String mobnum,
-                           String password) {
+                           String mobnum) {
         Users users = usersRepository.findById(userId).orElseThrow(() -> new IllegalStateException(
                 "User with id " + userId + "  does not exists"));
 
@@ -79,9 +91,6 @@ public class UsersService {
             users.setMobNum(mobnum);
         }
 
-        if (password != null && password.length() > 0 && !Objects.equals(users.getPassword(), password)) {
-            users.setPassword(password);
-        }
     }
 
     @Transactional
@@ -91,11 +100,21 @@ public class UsersService {
         user.setStatus(false);
     }
 
-    public List<UsersDto> getAll(){
-        return usersRepository.findAll().stream().map(userMappingUtils::mapToUsersDto).collect(Collectors.toList());
+    public void addNewCoffee(Coffee coffee) {
+        Optional<Coffee> coffeeByName = coffeeRepository.findCoffeeByName(coffee.getName());
+        if (coffeeByName.isPresent()) {
+            throw new IllegalStateException("This coffee already added");
+        }
+        coffeeRepository.save(coffee);
     }
 
-    public UsersDto getById(Long id){
-        return userMappingUtils.mapToUsersDto(usersRepository.findById(id).orElse(new Users()));
+    public void deleteCoffee(Long coffee_id) {
+        boolean exists = coffeeRepository.existsById(coffee_id);
+        if (!exists) {
+            throw new IllegalStateException("Coffee with id " + coffee_id + " does not exists");
+        }
+        coffeeRepository.deleteById(coffee_id);
     }
+
+
 }

@@ -1,7 +1,7 @@
 package com.example.Neobis_week_3.Utils;
 
 import com.example.Neobis_week_3.Dto.OrderCartDto;
-import com.example.Neobis_week_3.Models.OrderCart;
+import com.example.Neobis_week_3.Entity.OrderCart;
 import org.springframework.stereotype.Service;
 
 @Service
