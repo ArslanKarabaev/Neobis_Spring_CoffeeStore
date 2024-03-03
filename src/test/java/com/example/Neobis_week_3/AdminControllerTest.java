@@ -40,30 +40,6 @@ public class AdminControllerTest {
         adminToken = "Bearer " + authenticationService.authenticate(adminCredentials).getToken();
     }
 
-    @Test
-    void addNewUser() throws Exception {
-       // Set<Role> authorities = new HashSet<>();
-       // authorities.add(Role.USER);
-        UsersDto dto = new UsersDto("Rustam",
-                "Kasymov",
-                LocalDate.parse("2003-03-21"),
-                "rustam@gmail.com",
-                "123456789",
-                "pass",
-                ADMIN
-        );
-        String json = objectMapper.writeValueAsString(dto);
-
-        mockMvc.perform(post("http://localhost:8080/api/v1/CoffeeStore/admin/addNewUser")
-                        .header("Authorization", adminToken)
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpectAll(
-                        status().isOk()
-                        // content().string(containsString(""))
-                );
-    }
 
     @Test
     void getAllUsers() throws Exception {

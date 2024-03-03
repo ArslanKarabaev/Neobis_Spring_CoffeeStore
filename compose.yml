@@ -1,0 +1,25 @@
+services:
+  db_pg_16:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: CoffeeStore_DB
+      POSTGRES_USER: CoffeeStore_User
+      POSTGRES_PASSWORD: CoffeeStore_Pass
+    ports:
+      - 5432
+    container_name: postgres_con_2
+    volumes:
+      - C:\postgres_con2:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: neo-coffee-store-con
+    ports:
+      - 8001:8080
+    depends_on:
+      - db_pg_16
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_pg_16:5432/CoffeeStore_DB
+      - SPRING_DATASOURCE_USERNAME=CoffeeStore_User
+      - SPRING_DATASOURCE_PASSWORD=CoffeeStore_Pass
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
