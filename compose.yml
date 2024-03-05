@@ -6,7 +6,7 @@ services:
       POSTGRES_USER: CoffeeStore_User
       POSTGRES_PASSWORD: CoffeeStore_Pass
     ports:
-      - 5432
+      - 5432:5432
     container_name: postgres_con_2
     volumes:
       - C:\postgres_con2:/var/lib/postgresql/data
