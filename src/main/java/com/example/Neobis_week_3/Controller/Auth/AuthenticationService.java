@@ -1,5 +1,6 @@
 package com.example.Neobis_week_3.Controller.Auth;
 
+import com.example.Neobis_week_3.Dto.UsersDto;
 import com.example.Neobis_week_3.Entity.Users;
 import com.example.Neobis_week_3.Repository.UsersRepository;
 import com.example.Neobis_week_3.Service.JwtService.JwtService;
@@ -9,6 +10,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +24,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        Optional<Users> usersByFirstName = repository.findUsersByEmail(request.getEmail());
+        if (usersByFirstName.isPresent()) {
+            throw new IllegalStateException("This user is already registered");
+        }
         var user = Users.builder()
                 .firstName(request.getFirstName())
                 .secondName(request.getSecondName())
@@ -27,6 +35,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .mobNum(request.getMobNum())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .age(LocalDate.now().getYear()-request.getDateOfBirth().getYear())
                 .status(true)
                 .role(request.getRole())
                 .build();
@@ -36,6 +45,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

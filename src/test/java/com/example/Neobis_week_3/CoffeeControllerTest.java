@@ -43,7 +43,7 @@ public class CoffeeControllerTest {
 
     @Test
     void getCoffeeById() throws Exception {
-        mockMvc.perform(get("http://localhost:8080/api/v1/CoffeeStore/Coffee/2")
+        mockMvc.perform(get("http://localhost:8080/api/v1/CoffeeStore/Coffee/getCoffeeById/2")
                         .header("Authorization", adminToken))
                 .andExpectAll(
                 status().isOk()

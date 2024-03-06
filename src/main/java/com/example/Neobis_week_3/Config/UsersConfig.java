@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
+
 import static com.example.Neobis_week_3.Enums.Role.ADMIN;
 import static com.example.Neobis_week_3.Enums.Role.MANAGER;
 
@@ -26,6 +28,7 @@ public class UsersConfig {
                     .secondName("Admin")
                     .email("admin@gmail.com")
                     .password("password")
+                    .dateOfBirth(LocalDate.of(2000,8,2))
                     .role(ADMIN)
                     .build();
             System.out.println("Admin token: " + service.register(admin).getToken());
@@ -35,6 +38,7 @@ public class UsersConfig {
                     .secondName("Admin")
                     .email("manager@gmail.com")
                     .password("pass")
+                    .dateOfBirth(LocalDate.of(2000,8,2))
                     .role(MANAGER)
                     .build();
             System.out.println("Manager token: " + service.register(manager).getToken());

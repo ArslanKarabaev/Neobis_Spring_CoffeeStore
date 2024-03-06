@@ -42,13 +42,6 @@ public class ManagementService {
         return userMappingUtils.mapToUsersDto(getUserById(id).orElse(new Users()));
     }
 
-    public void addNewUser(Users user) {
-        Optional<Users> usersByFirstName = usersRepository.findUsersByFirstName(user.getFirstName());
-        if (usersByFirstName.isPresent()) {
-            throw new IllegalStateException("This user is already registered");
-        }
-        usersRepository.save(user);
-    }
 
 
 }
