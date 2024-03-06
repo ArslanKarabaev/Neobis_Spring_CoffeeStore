@@ -49,49 +49,7 @@ public class AdminService {
         return userMappingUtils.mapToUsersDto(getUserById(id).orElse(new Users()));
     }
 
-    public void addNewUser(Users user) {
-        Optional<Users> usersByFirstName = usersRepository.findUsersByFirstName(user.getFirstName());
-        if (usersByFirstName.isPresent()) {
-            throw new IllegalStateException("This user is already registered");
-        }
-        usersRepository.save(user);
-    }
 
-    @Transactional
-    public void updateUser(Long userId,
-                           String firstName,
-                           String secondName,
-                           LocalDate dateOfBirth,
-                           String email,
-                           String mobnum) {
-        Users users = usersRepository.findById(userId).orElseThrow(() -> new IllegalStateException(
-                "User with id " + userId + "  does not exists"));
-
-        if (firstName != null && firstName.length() > 0 && !Objects.equals(users.getFirstName(), firstName)) {
-            users.setFirstName(firstName);
-        }
-
-        if (email != null && email.length() > 0 && !Objects.equals(users.getEmail(), email)) {
-            Optional<Users> usersOptional = usersRepository.findUsersByEmail(email);
-            if (usersOptional.isPresent()) {
-                throw new IllegalStateException("email taken");
-            }
-            users.setEmail(email);
-        }
-
-        if (secondName != null && secondName.length() > 0 && !Objects.equals(users.getSecondName(), secondName)) {
-            users.setSecondName(secondName);
-        }
-
-        if (dateOfBirth != null && !Objects.equals(users.getDateOfBirth(), dateOfBirth)) {
-            users.setDateOfBirth(dateOfBirth);
-        }
-
-        if (mobnum != null && mobnum.length() > 0 && !Objects.equals(users.getMobNum(), mobnum)) {
-            users.setMobNum(mobnum);
-        }
-
-    }
 
     @Transactional
     public void deleteUser(Long userId) {

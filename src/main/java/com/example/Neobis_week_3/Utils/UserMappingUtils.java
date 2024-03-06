@@ -17,6 +17,7 @@ public class UserMappingUtils {
         usersDto.setPassword(users.getPassword());
         usersDto.setStatus(users.getStatus());
         usersDto.setAge(users.getAge());
+        usersDto.setRole(users.getRole());
         return usersDto;
     }
 
@@ -31,6 +32,7 @@ public class UserMappingUtils {
         users.setPassword(users.getPassword());
         users.setStatus(usersDto.getStatus());
         users.setAge(usersDto.getAge());
+        users.setRole(usersDto.getRole());
         return users;
     }
 }

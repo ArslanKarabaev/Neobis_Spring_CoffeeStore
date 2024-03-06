@@ -24,7 +24,18 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-recourses",
+                                "/swagger-recourses/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/webjars/**"
+                                ).permitAll()
 
                         .requestMatchers("api/v1/CoffeeStore/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
                         .requestMatchers("api/v1/CoffeeStore/management/**").hasAnyAuthority(ADMIN.name(), MANAGER.name())

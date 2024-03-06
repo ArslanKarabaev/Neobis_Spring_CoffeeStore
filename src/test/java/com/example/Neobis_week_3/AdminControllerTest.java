@@ -58,27 +58,6 @@ public class AdminControllerTest {
                 );
     }
 
-    @Test
-    void updateUser() throws Exception {
-        UsersDto dto = new UsersDto(
-                "Rus",
-                "Kasymov",
-                LocalDate.parse("2003-03-21"),
-                "rus@gmail.com",
-                "987654321",
-                "pass",
-                Role.USER
-        );
-        String json = objectMapper.writeValueAsString(dto);
-
-        mockMvc.perform(put("http://localhost:8080/api/v1/CoffeeStore/admin/updateUser/1")
-                        .header("Authorization", adminToken)
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpectAll(
-                        status().isOk()
-                );
-    }
 
     @Test
     void addNewCoffee() throws Exception {

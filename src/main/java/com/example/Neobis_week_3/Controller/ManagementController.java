@@ -32,9 +32,5 @@ public class ManagementController {
 
     }
 
-    @PostMapping
-    public void addNewUser(@RequestBody Users user) {
-        managementService.addNewUser(user);
-    }
 
 }

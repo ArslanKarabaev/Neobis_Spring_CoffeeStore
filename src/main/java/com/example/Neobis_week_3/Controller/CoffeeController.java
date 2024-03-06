@@ -1,8 +1,11 @@
 package com.example.Neobis_week_3.Controller;
 
-import com.example.Neobis_week_3.Entity.Coffee;
+import com.example.Neobis_week_3.Dto.CoffeeDto;
 import com.example.Neobis_week_3.Service.CoffeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -17,14 +20,40 @@ public class CoffeeController {
         this.coffeeService = coffeeService;
     }
 
+    @Operation(
+            description = "Get All Coffee endpoint for ADMIN,MANAGER,USER",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @GetMapping(path = "getAllCoffee")
-    public List<Coffee> getAllCoffee() {
-        return coffeeService.getAllCoffee();
+    public ResponseEntity<List<CoffeeDto>> getAllCoffee() {
+        return ResponseEntity.ok(coffeeService.getAllCoffeeDto());
     }
 
-    @GetMapping(path = "{coffee_id}")
-    public Optional<Coffee> getCoffeeById(@PathVariable("coffee_id") Long coffee_id){
-        return coffeeService.getCoffeeById(coffee_id);
+    @Operation(
+            description = "Get Coffee By ID endpoint for ADMIN,MANAGER,USER",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+    )
+    @GetMapping(path = "getCoffeeById/{coffee_id}")
+    public ResponseEntity<Optional<CoffeeDto>> getCoffeeById(@PathVariable("coffee_id") Long coffee_id){
+        return ResponseEntity.ok(coffeeService.getCoffeeByIdDto(coffee_id));
     }
 
 }

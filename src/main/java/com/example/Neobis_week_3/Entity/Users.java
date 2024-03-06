@@ -1,23 +1,22 @@
 package com.example.Neobis_week_3.Entity;
 
 import com.example.Neobis_week_3.Enums.Role;
+import com.example.Neobis_week_3.Repository.UsersRepository;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table
 public class Users implements UserDetails {
@@ -51,7 +50,9 @@ public class Users implements UserDetails {
         this.role = role;
     }
 
-
+    public Integer getAge() {
+        return Period.between(dateOfBirth, LocalDate.now()).getYears();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
